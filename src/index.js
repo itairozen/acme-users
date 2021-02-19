@@ -1,4 +1,5 @@
 const faker = require('faker');
+const render = require('./render');
 
 const userList = Array(5)
   .fill('')
@@ -7,9 +8,11 @@ const userList = Array(5)
   });
 
 const userDetails = userList.reduce((acc, user) => {
-  acc[user] = faker.lorem.paragraph(2);
+  acc[user] = faker.name.jobDescriptor();
   return acc;
 }, {});
+
+render({userList, userDetails});
 
 module.exports = {
   userList,

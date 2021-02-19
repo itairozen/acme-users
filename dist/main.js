@@ -14275,7 +14275,17 @@ eval("/*\n\nCopyright (c) 2012-2014 Jeffrey Mealo\n\nPermission is hereby grante
   \**********************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("const faker = __webpack_require__(/*! faker */ \"./node_modules/faker/index.js\");\n\nconst userList = Array(5)\n  .fill('')\n  .map((_) => {\n    return faker.name.findName();\n  });\n\nconst userDetails = userList.reduce((acc, user) => {\n  acc[user] = faker.lorem.paragraph(2);\n  return acc;\n}, {});\n\nmodule.exports = {\n  userList,\n  userDetails,\n};\n\n\n//# sourceURL=webpack://acme-users/./src/index.js?");
+eval("const faker = __webpack_require__(/*! faker */ \"./node_modules/faker/index.js\");\nconst render = __webpack_require__(/*! ./render */ \"./src/render.js\");\n\nconst userList = Array(5)\n  .fill('')\n  .map((_) => {\n    return faker.name.findName();\n  });\n\nconst userDetails = userList.reduce((acc, user) => {\n  acc[user] = faker.name.jobDescriptor();\n  return acc;\n}, {});\n\nrender({userList, userDetails});\n\nmodule.exports = {\n  userList,\n  userDetails,\n};\n\n\n//# sourceURL=webpack://acme-users/./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/render.js":
+/*!***********************!*\
+  !*** ./src/render.js ***!
+  \***********************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+eval("const { userList, userDetails } = __webpack_require__(/*! ./render */ \"./src/render.js\");\n\nconst userHtml = document.querySelector('#user-list');\n\nconst render = ({ userList, userDetails }) => {\n  const html = `\n   ${userList.map((user, idx) => `\n     <li>\n     <a href = '#${idx}' > ${user} </a>\n       <ul>\n         <li>\n          ${userDetails[user]} \n         </li>\n       </ul>\n     </li>\n   `).join('')}\n  `;\n  userHtml.innerHTML = html;\n};\n\n\nmodule.exports = render\n\n\n\n//# sourceURL=webpack://acme-users/./src/render.js?");
 
 /***/ })
 
